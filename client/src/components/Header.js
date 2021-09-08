@@ -14,8 +14,8 @@ export default function Header () {
                     <nav>{
                         authUser ? (
                             <ul className="header--signedin">
-                                <li>Welcome {authUser.name}</li>
-                                <li><Link to="/signOut">Sign Out</Link></li>
+                                <li>Welcome, {authUser.name}</li>
+                                <li onClick={context.actions.signOut}><Link to="/">Sign Out</Link></li>
                             </ul>
                         )
                             :

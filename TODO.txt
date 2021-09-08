@@ -3,5 +3,5 @@ in Data.js, make functions that returns all courses from api. Done!
 in Public.js, grab that function from context.data and iterate through the returned array to make one course
 component per returned course.  (should create a course component too); Done!
 
-Work on sign up and sign in functions
-
+Work on sign up: Sign UP done.
+Work on sign in:
