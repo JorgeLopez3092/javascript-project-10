@@ -85,6 +85,7 @@ router.get('/users', authenticateUser, asyncHandler(async (req, res) => {
   const user = req.currentUser;
 
   res.json({
+    id: user.id,
     name: `${user.firstName} ${user.lastName}`,
     username: user.emailAddress
   });
@@ -198,7 +199,7 @@ router.post('/courses', [
     .withMessage('Please provide a title.'),
   check('description')
     .exists({ checkNull: true, checkFalsy: true })
-    .withMessage('Please provide a descriptiondes.'),
+    .withMessage('Please provide a description.'),
   check('userId')
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Please provide a userId'),
@@ -243,7 +244,7 @@ router.put('/courses/:id', [
     .withMessage('Please provide a title.'),
   check('description')
     .exists({ checkNull: true, checkFalsy: true })
-    .withMessage('Please provide a descriptiondes.'),
+    .withMessage('Please provide a description.'),
   check('userId')
     .exists({ checkNull: true, checkFalsy: true })
     .withMessage('Please provide a userId'),

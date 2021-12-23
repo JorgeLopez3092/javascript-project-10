@@ -46,6 +46,7 @@ export default function SignUp() {
                 } else {
                     context.actions.signIn(emailAddress, password);
                     history.push('/');
+                    window.location.reload();
                 }
             })
             .catch((err) => {

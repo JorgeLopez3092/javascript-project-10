@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Context } from '../Context';
 import Form from './Form';
 
-export default function SignIn() {
+export default function SignIn(props) {
     let context = useContext(Context);
     let history = useHistory();
     const [emailAddress, setEmailAddress] = useState('');
@@ -24,13 +24,14 @@ export default function SignIn() {
     }
 
     const submit = () => {
+        const { from } = props.location.state || { from: { pathname: '/' } };
         context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if (user === null) {
                     setErrors([...errors, 'Sign-in was unsuccessful']);
                 } else {
-                    history.push('/');
-                    window.location.reload();
+                    history.push(from);
+                    // window.location.reload();
                 }
             })
             .catch((error) => {
@@ -46,7 +47,7 @@ export default function SignIn() {
     return (
         <main>
             <div className="form--centered">
-                <h2>Sign Up</h2>
+                <h2>Sign In</h2>
                 <Form
                     cancel={cancel}
                     errors={errors}

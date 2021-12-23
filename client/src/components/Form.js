@@ -36,13 +36,11 @@ function ErrorsDisplay(props) {
 
     if (props.errors.length) {
         errorsDisplay = (
-            <div>
-                <h2 className="validation--errors--label">Validation errors</h2>
-                <div className="validation-errors">
-                    <ul>
-                        {props.errors.map((error, i) => <li key={i}>{error}</li>)}
-                    </ul>
-                </div>
+            <div className="validation--errors">
+                <h3>Validation errors</h3>
+                <ul>
+                    {props.errors.map((error, i) => <li key={i}>{error}</li>)}
+                </ul>
             </div>
         );
     }

@@ -10,6 +10,9 @@ import Public from './components/Public';
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import CourseDetail from './components/CourseDetail';
+import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
+import PrivateRoute from './components/PrivateRoute';
 // import './App.css';
 
 function App() {
@@ -22,7 +25,9 @@ function App() {
           <Route exact path="/" component={Public} />
           <Route path="/signup" component={UserSignUp} />
           <Route path="/signin" component={UserSignIn} />
-          <Route path="/course/:id" component={CourseDetail} />
+          <PrivateRoute path="/courses/:id/update" component={UpdateCourse} />
+          <PrivateRoute path="/courses/create" component={CreateCourse} />
+          <Route path="/courses/:id" component={CourseDetail} />
 
           {/* <PrivateRoute path="/authenticated" component={Authenticated} />
         <Route path="/signout" component={UserSignOutWithContext} />

@@ -3,7 +3,7 @@ import config from './config';
 export default class Data {
   api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
     const url = config.apiBaseUrl + path;
-  
+
     const options = {
       method,
       headers: {
@@ -39,7 +39,7 @@ export default class Data {
       throw new Error();
     }
   }
-  
+
   async createUser(user) {
     const response = await this.api('/users', 'POST', user);
     if (response.status === 201) {
@@ -60,6 +60,49 @@ export default class Data {
     if (response.status === 200) {
       return response.json().then(data => data);
     } else if (response.status !== 200) {
+      throw new Error();
+    }
+  }
+
+  async postCourse(course, username, password) {
+    const credentials = {
+      username,
+      password
+    }
+    const response = await this.api('/courses', 'POST', course, true, credentials);
+    if (response.status === 201) {
+      return [];
+    }else if (response.status === 400) {
+      return response.json().then(data => data.errors);
+    } else {
+      throw new Error();
+    }
+  }
+
+  async putCourse(course, courseId, username, password) {
+    const credentials = {
+      username, password
+    };
+    const response = await this.api(`/courses/${courseId}`, 'PUT', course, true, credentials);
+    if (response.status === 204) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then(data => data.errors);
+    } else {
+      throw new Error();
+    }
+  }
+
+  async deleteCourse(course, courseId, username, password) {
+    const credentials = {
+      username, password
+    };
+    const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, credentials);
+    if (response.status === 204) {
+      return [];
+    } else if (response.status === 403) {
+      return response.json().then(data => data.errors);
+    } else {
       throw new Error();
     }
   }
