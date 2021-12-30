@@ -41,13 +41,11 @@ export default function SignUp() {
                 return correctCourse
             })
             .catch(err => {
-                setErrors(err)
-                if (err.response.status === 500) {
-                    history.push('/error')
-                }
+                console.error(err);
+                history.push('/error')
             })
             .finally(() => {
-                if(!correctCourse) {
+                if (!correctCourse) {
                     controller.abort();
                     history.push('/notfound');
                 }
@@ -58,11 +56,11 @@ export default function SignUp() {
                     formDiv.classList.remove('form--centered')
                 }
             });
-            return () => {
-            if(!authenticated) {
-               controller.abort();
+        return () => {
+            if (!authenticated) {
+                controller.abort();
             }
-            }
+        }
 
     }, [id]);
 
@@ -97,7 +95,6 @@ export default function SignUp() {
         if (!description) {
             const stillDesc = document.getElementById('description').value;
             description = stillDesc
-            console.log(description)
         }
 
 

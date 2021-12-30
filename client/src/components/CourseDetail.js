@@ -25,9 +25,7 @@ export default function Public() {
             })
             .catch(err => {
                 console.error(err)
-                if (err.response.status === 500) {
                     history.push('/error');
-                }
             })
     }, [])
 

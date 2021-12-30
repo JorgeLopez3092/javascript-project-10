@@ -55,7 +55,9 @@ export default function SignUp(props) {
                         })
                         .catch((error) => {
                             console.error(error);
-                            if (error.reponse.status === 500) {
+                            if (error.status === 404) {
+                                history.push('/notfound')
+                            } else {
                                 history.push('/error');
                             }
                         });
@@ -63,6 +65,7 @@ export default function SignUp(props) {
             })
             .catch((err) => {
                 console.log(err);
+                history.push('/error');
             })
     }
 

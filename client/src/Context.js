@@ -13,7 +13,9 @@ export const Provider = ({ children }) => {
     const loadCourses = async () => {
         let courses = await data.getCourses()
             .then(res => res)
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+            });
         if (courses.length > 0) {
             setCourses(courses.map(data => {
                 const course = {
