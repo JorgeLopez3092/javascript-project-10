@@ -1,11 +1,11 @@
-import React, { useState, Component } from 'react';
+import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import Data from './Data';
 
 export const Context = React.createContext();
 
 export const Provider = ({ children }) => {
-    const [data, setData] = useState(new Data());
+    const data = new Data();
     const [authenticatedUser, setAuthenticatedUser] = useState(Cookies.getJSON('authenticatedUser') || null);
     const [password, setPassword] = useState(Cookies.get('userPassword') || null);
     const [courses, setCourses] = useState([]);
@@ -102,9 +102,6 @@ export const Provider = ({ children }) => {
         if (user !== null) {
             setAuthenticatedUser(user);
             setPassword(password);
-            const cookieOptions = {
-                expires: 1 // 1 day
-            };
             Cookies.set('authenticatedUser', JSON.stringify(user));
             Cookies.set('userPassword', password);
         }
@@ -133,29 +130,5 @@ export const Provider = ({ children }) => {
         },
     }
 
-    return (
-        <Context.Provider value={value}>
-            {children}
-        </Context.Provider>
-    );
+    return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-export const Consumer = Context.Consumer;
-
-/**
- * A higher-order component that wraps the provided component in a Context Consumer component.
- * @param {class} Component - A React component.
- * @returns {function} A higher-order component.
- */
-
-export function withContext(Component) {
-    return function ContextComponent(props) {
-        return (
-            <Context.Consumer>
-                {context => <Component {...props} context={context} />}
-            </Context.Consumer>
-        );
-    }
-}
-
-export default { withContext, Context }

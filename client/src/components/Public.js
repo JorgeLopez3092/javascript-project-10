@@ -7,7 +7,6 @@ export default function Public() {
     let context = useContext(Context);
     const [loading, setLoading] = useState(true);
     const [courses, setCourses] = useState([]);
-    console.log(context);
 
     useEffect(() => {
         context.actions.loadCourses()

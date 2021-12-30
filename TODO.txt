@@ -8,3 +8,6 @@ Work on sign in: done
 creating Course: almost, need to figure out how to store and maintain password in state
 
 Finish turning Context into a function with hooks.  Currently changing functions that use SetState into making them use setProperty from useState hook.
+
+
+make updating only one field possible.  currnetly, both fields must be updatd./

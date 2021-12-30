@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { Context } from '../Context';
 import Form from './Form';
 
@@ -12,17 +12,40 @@ export default function SignUp() {
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-    let formDiv = document.getElementsByClassName('form--centered');
     let context = useContext(Context);
+    let history = useHistory();
+
     useEffect(() => {
+        const controller = new AbortController();
+        let correctCourse;
+        let formDiv = document.getElementsByClassName('form--centered');
+        let authenticated = true;
         context.actions.loadCourses()
             .then(data => {
-                setCourse(data[id - 1]);
+                const courseCheck = data.find(course => course.id === parseInt(id))
+                const teacherCheck = courseCheck.teacher
+                if (context.authenticatedUser.id !== teacherCheck.id) {
+                    authenticated = false;
+                    history.push('/forbidden');
+                }
+                return data
+            })
+            .then(data => {
+                correctCourse = data.filter(course => course.id === parseInt(id))
+                if (correctCourse.length === 0) {
+                    history.push('/notfound');
+                }
+                setCourse(correctCourse[0])
                 setCourseTitle(course.title)
                 setCourseDescription(course.description)
+                return correctCourse
             })
             .catch(err => setErrors(err))
             .finally(() => {
+                if(!correctCourse) {
+                    controller.abort();
+                    history.push('/notfound');
+                }
                 setLoading(false);
                 formDiv = formDiv[0] || null;
                 if (formDiv) {
@@ -30,8 +53,14 @@ export default function SignUp() {
                     formDiv.classList.remove('form--centered')
                 }
             });
-    }, []);
-    let history = useHistory();
+            return () => {
+            if(!authenticated) {
+               controller.abort();
+            }
+            }
+
+    }, [id]);
+
 
     const change = (event) => {
         const value = event.target.value;
@@ -107,7 +136,6 @@ export default function SignUp() {
                             submitButtonText="Update Course"
                             elements={() => (
                                 <React.Fragment>
-                                    {console.log(course)}
                                     <div className="main--flex">
                                         <div>
                                             <label htmlFor="title">Course Title</label>

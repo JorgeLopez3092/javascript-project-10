@@ -48,7 +48,7 @@ export default function SignUp(props) {
                     context.actions.signIn(emailAddress, password)
                         .then((user) => {
                             if (user === null) {
-                                setErrors([...errors, 'Sign-in was unsuccessful']);
+                                setErrors(['Sign-in was unsuccessful']);
                             } else {
                                 history.push(from);
                             }

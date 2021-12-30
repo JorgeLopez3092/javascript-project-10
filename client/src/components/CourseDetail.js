@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
-import Cookies from 'js-cookie';
 import { Link, useParams, useHistory } from 'react-router-dom'
 import { Context } from '../Context';
-import CourseLink from './CourseLink';
 
 export default function Public() {
     const { id } = useParams();
@@ -11,22 +9,29 @@ export default function Public() {
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [course, setCourse] = useState({});
-    const [errors, setErrors] = useState([]);
+    let errors;
+
 
     useEffect(() => {
         context.actions.loadCourses()
             .then(data => {
-                setCourse(data[id - 1]);
-                setLoading(false);
+                const correctCourse = data.filter(course => course.id === parseInt(id))
+                if (correctCourse.length > 0) {
+                    setCourse(correctCourse[0])
+                    setLoading(false);
+                } else {
+                    history.push('/notfound')
+                }
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
     }, [])
 
     const deleteCourse = () => {
         context.actions.deleteCourse(course, id, context.authenticatedUser.username, context.password)
             .then(data => {
                 if (data) {
-                    setErrors(data)
+                    errors = data
+                    console.error(errors);
                 } else {
                     history.push(`/`);
                 }
@@ -44,7 +49,6 @@ export default function Public() {
                     <h1>Loading...</h1>
                     :
                     <React.Fragment>
-                        {console.log(course)}
                         <div className="actions--bar">
                             <div className="wrap">
                                 {

@@ -14,6 +14,9 @@ import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import PrivateRoute from './components/PrivateRoute';
+
+import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
 // import './App.css';
 
 function App() {
@@ -30,10 +33,8 @@ function App() {
           <PrivateRoute path="/courses/:id/update" component={UpdateCourse} />
           <PrivateRoute path="/courses/create" component={CreateCourse} />
           <Route path="/courses/:id" component={CourseDetail} />
-
-          {/* <PrivateRoute path="/authenticated" component={Authenticated} />
-        <Route path="/signout" component={UserSignOutWithContext} />
-        <Route component={NotFound} /> */}
+          <Route path="/forbidden" component={Forbidden} />
+          <Route component={NotFound} />
         </Switch>
       </div>
     </Router>

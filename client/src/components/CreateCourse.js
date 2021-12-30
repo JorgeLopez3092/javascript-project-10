@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Context } from '../Context';
 import Form from './Form';
 
 export default function SignUp() {
-    let formDiv = document.getElementsByClassName('form--centered');
     useEffect(() => {
+        let formDiv = document.getElementsByClassName('form--centered');
         formDiv = formDiv[0];
         formDiv.classList.add('wrap');
         formDiv.classList.remove('form--centered')
@@ -17,7 +17,6 @@ export default function SignUp() {
     const [estimatedTime, setEstimatedTime] = useState('');
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
-    console.log(context)
 
     const change = (event) => {
         const value = event.target.value;
