@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Context } from '../Context';
 import CourseLink from './CourseLink';
 
 export default function Public() {
     let context = useContext(Context);
+    let history = useHistory();
     const [loading, setLoading] = useState(true);
     const [courses, setCourses] = useState([]);
 
@@ -14,7 +15,13 @@ export default function Public() {
                 setCourses(data);
                 setLoading(false);
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err)
+                if (err.response.status === 500) {
+                    history.push('/error');
+                }
+            });
+
     }, [])
 
     return (

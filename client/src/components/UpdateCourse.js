@@ -40,7 +40,12 @@ export default function SignUp() {
                 setCourseDescription(course.description)
                 return correctCourse
             })
-            .catch(err => setErrors(err))
+            .catch(err => {
+                setErrors(err)
+                if (err.response.status === 500) {
+                    history.push('/error')
+                }
+            })
             .finally(() => {
                 if(!correctCourse) {
                     controller.abort();

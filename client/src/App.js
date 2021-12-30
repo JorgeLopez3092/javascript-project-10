@@ -17,6 +17,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 import NotFound from './components/NotFound';
 import Forbidden from './components/Forbidden';
+import Error from './components/Error';
 // import './App.css';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <PrivateRoute path="/courses/create" component={CreateCourse} />
           <Route path="/courses/:id" component={CourseDetail} />
           <Route path="/forbidden" component={Forbidden} />
+          <Route path="/error" component={Error} />
           <Route component={NotFound} />
         </Switch>
       </div>

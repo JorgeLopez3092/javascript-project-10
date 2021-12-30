@@ -55,7 +55,9 @@ export default function SignUp(props) {
                         })
                         .catch((error) => {
                             console.error(error);
-                            history.push('/error');
+                            if (error.reponse.status === 500) {
+                                history.push('/error');
+                            }
                         });
                 }
             })
