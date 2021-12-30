@@ -39,6 +39,10 @@ export const Provider = ({ children }) => {
             })
             .catch(err => err);
         console.log(course);
+        course = {
+            userId,
+            ...course,
+        }
         await data.postCourse(course, username, password)
             .then(data => {
                 if (data.length) {
@@ -111,6 +115,7 @@ export const Provider = ({ children }) => {
         setAuthenticatedUser(null);
         setPassword(null);
         Cookies.remove('authenticatedUser');
+        Cookies.remove('userPassword');
     }
 
     const value = {

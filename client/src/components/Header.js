@@ -15,7 +15,7 @@ export default function Header () {
                         authUser ? (
                             <ul className="header--signedin">
                                 <li>Welcome, {authUser.name}</li>
-                                <li onClick={context.actions.signOut}><Link to="/">Sign Out</Link></li>
+                                <li><Link to="/signout">Sign Out</Link></li>
                             </ul>
                         )
                             :

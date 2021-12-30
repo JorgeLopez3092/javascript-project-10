@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Public from './components/Public';
 import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
+import UserSignOut from './components/UserSignOut';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/" component={Public} />
           <Route path="/signup" component={UserSignUp} />
           <Route path="/signin" component={UserSignIn} />
+          <Route path="/signout" component={UserSignOut} />
           <PrivateRoute path="/courses/:id/update" component={UpdateCourse} />
           <PrivateRoute path="/courses/create" component={CreateCourse} />
           <Route path="/courses/:id" component={CourseDetail} />

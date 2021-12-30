@@ -31,7 +31,6 @@ export default function SignIn(props) {
                     setErrors([...errors, 'Sign-in was unsuccessful']);
                 } else {
                     history.push(from);
-                    // window.location.reload();
                 }
             })
             .catch((error) => {

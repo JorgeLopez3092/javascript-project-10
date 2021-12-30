@@ -47,7 +47,7 @@ export default function SignUp() {
             materialsNeeded,
         };
 
-        context.actions.createCourse(course, context.authenticatedUser.username, context.authenticatedUser.password)
+        context.actions.createCourse(course, context.authenticatedUser.username, context.password)
             .then(data => {
                 console.log(data);
                 if (data) {
