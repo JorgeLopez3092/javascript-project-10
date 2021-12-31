@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { Context } from '../Context';
 import CourseLink from './CourseLink';
 
-export default function Public() {
+export default function Courses() {
     let context = useContext(Context);
     let history = useHistory();
     const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export default function Public() {
                         ?
                         <h1>Loading...</h1>
                         :
-                        courses.map(course =>
+                        courses.map(course => // Create one CourseLink component for every course in database
                             <CourseLink title={course.title} key={course.id} id={course.id} />
                         )
                 }

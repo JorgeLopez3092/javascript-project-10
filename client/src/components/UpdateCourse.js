@@ -22,8 +22,10 @@ export default function SignUp() {
         let authenticated = true;
         context.actions.loadCourses()
             .then(data => {
+                // ensures that we are connected to the correct course based on id URL parameter
                 const courseCheck = data.find(course => course.id === parseInt(id))
                 const teacherCheck = courseCheck.teacher
+                // checks if current authenticated user is owner of course through id
                 if (context.authenticatedUser.id !== teacherCheck.id) {
                     authenticated = false;
                     history.push('/forbidden');
@@ -31,6 +33,7 @@ export default function SignUp() {
                 return data
             })
             .then(data => {
+                // grabs index of course from data array (which carries an array of all the courses)
                 correctCourse = data.filter(course => course.id === parseInt(id))
                 if (correctCourse.length === 0) {
                     history.push('/notfound');
@@ -41,14 +44,17 @@ export default function SignUp() {
                 return correctCourse
             })
             .catch(err => {
+                // for any errors not already handled manually
                 console.error(err);
                 history.push('/error')
             })
             .finally(() => {
+                // abort react rendering if course does not exist before rerouting to /notfound
                 if (!correctCourse) {
                     controller.abort();
                     history.push('/notfound');
                 }
+                // renders form and styles it once everything has been loaded correctly.
                 setLoading(false);
                 formDiv = formDiv[0] || null;
                 if (formDiv) {
@@ -56,15 +62,9 @@ export default function SignUp() {
                     formDiv.classList.remove('form--centered')
                 }
             });
-        return () => {
-            if (!authenticated) {
-                controller.abort();
-            }
-        }
-
     }, [id]);
 
-
+    // update correct field and the state thats tracking its value
     const change = (event) => {
         const value = event.target.value;
         switch (event.target.name) {
@@ -86,7 +86,9 @@ export default function SignUp() {
     }
 
     const submit = () => {
-        console.log(title);
+        /* since the state starts off empty up top, if no changes are made to the required title and description forms 
+            then the state stays empty and never gets updated with change function.  These checks ensure that the
+            state variables get filled with course object values if unchanged.  required for successful api call. */
         if (!title) {
             const stillTitle = document.getElementById('title').value;
             title = stillTitle
@@ -97,7 +99,7 @@ export default function SignUp() {
             description = stillDesc
         }
 
-
+        // object to pass api
         const updatedCourse = {
             title,
             description,
@@ -118,10 +120,11 @@ export default function SignUp() {
             });
     }
 
+    // this cancel sends user back to the coursedetail page of the same course
     const cancel = () => {
         history.push(`/courses/${id}`);
     }
-
+    // built on Form template component
     return (
         <main>
             {

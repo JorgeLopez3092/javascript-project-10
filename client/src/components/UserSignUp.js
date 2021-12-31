@@ -11,6 +11,7 @@ export default function SignUp(props) {
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPass] = useState('');
     const [errors, setErrors] = useState([]);
+    // update correct field and state holding its value
     const change = (event) => {
         const value = event.target.value;
         switch (event.target.name) {
@@ -32,6 +33,7 @@ export default function SignUp(props) {
     }
 
     const submit = () => {
+        // for PrivateRoute.  Will take use back to where they were before being prompted to sign in.
         const { from } = props.location.state || { from: { pathname: '/' } };
         const user = {
             firstName,
@@ -39,12 +41,13 @@ export default function SignUp(props) {
             emailAddress,
             password,
         };
-
+        // api call to create user
         context.data.createUser(user)
             .then(errors => {
                 if (errors.length) {
                     setErrors(errors);
                 } else {
+                    // if create user is successful, this is an api call to sign the user in using same credentials just set.
                     context.actions.signIn(emailAddress, password)
                         .then((user) => {
                             if (user === null) {
@@ -55,11 +58,7 @@ export default function SignUp(props) {
                         })
                         .catch((error) => {
                             console.error(error);
-                            if (error.status === 404) {
-                                history.push('/notfound')
-                            } else {
-                                history.push('/error');
-                            }
+                            history.push('/error');
                         });
                 }
             })
@@ -68,7 +67,7 @@ export default function SignUp(props) {
                 history.push('/error');
             })
     }
-
+    // cancel only needs to send you back to homepage.
     const cancel = () => {
         history.push('/');
     }

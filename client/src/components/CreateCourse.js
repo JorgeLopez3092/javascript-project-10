@@ -18,6 +18,7 @@ export default function SignUp() {
     const [materialsNeeded, setMaterialsNeeded] = useState('');
     const [errors, setErrors] = useState([]);
 
+    // update the state and each field depending on which field is selected.
     const change = (event) => {
         const value = event.target.value;
         switch (event.target.name) {
@@ -39,6 +40,7 @@ export default function SignUp() {
     }
 
     const submit = () => {
+        // create course object for api call
         const course = {
             title,
             description,
@@ -65,6 +67,7 @@ export default function SignUp() {
         history.push('/');
     }
 
+    // built off Form component.
     return (
         <main>
             <div className="form--centered">

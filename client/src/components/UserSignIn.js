@@ -28,8 +28,10 @@ export default function SignIn(props) {
         context.actions.signIn(emailAddress, password)
             .then((user) => {
                 if (user === null) {
+                    //update error state if username/password combo doesn't exist
                     setErrors(['Sign-in was unsuccessful']);
                 } else {
+                    // send user back to page before sign in prompt
                     history.push(from);
                 }
             })
@@ -43,6 +45,7 @@ export default function SignIn(props) {
         history.push('/');
     }
 
+    // uses the form component to build itself on.
     return (
         <main>
             <div className="form--centered">

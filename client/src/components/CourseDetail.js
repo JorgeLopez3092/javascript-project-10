@@ -11,24 +11,28 @@ export default function Public() {
     const [course, setCourse] = useState({});
     let errors;
 
-
+    // Grab list of courses
     useEffect(() => {
         context.actions.loadCourses()
             .then(data => {
+                // grab course with same id as visited link parameter
                 const correctCourse = data.filter(course => course.id === parseInt(id))
                 if (correctCourse.length > 0) {
                     setCourse(correctCourse[0])
                     setLoading(false);
                 } else {
+                    // if there is no course with the same id as the id parameter
                     history.push('/notfound')
                 }
             })
             .catch(err => {
                 console.error(err)
+                // for any errors not handled manually
                     history.push('/error');
             })
     }, [])
 
+    // calling delete function from context.  requires credentials
     const deleteCourse = () => {
         context.actions.deleteCourse(course, id, context.authenticatedUser.username, context.password)
             .then(data => {
@@ -54,7 +58,7 @@ export default function Public() {
                     <React.Fragment>
                         <div className="actions--bar">
                             <div className="wrap">
-                                {
+                                {   // checks whether to show update and delete buttons based on authentication and ownership
                                     context.authenticatedUser && context.authenticatedUser.id === course.teacher.id
                                         ?
                                         <>
